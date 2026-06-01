@@ -1,0 +1,78 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users: only the owner can read/write their own profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Mechanics: any authenticated user can read (for search), only owner can write
+    match /mechanics/{mechanicId} {
+      allow read: if request.auth != null;
+      allow create, update: if request.auth != null && request.auth.uid == mechanicId;
+      allow delete: if false;
+    }
+
+    // Service requests: customer creates, both parties can read/update
+    match /service_requests/{requestId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null && (
+        request.auth.uid == resource.data.customerId ||
+        request.auth.uid == resource.data.mechanicId
+      );
+      allow update: if request.auth != null && (
+        request.auth.uid == resource.data.customerId ||
+        request.auth.uid == resource.data.mechanicId
+      );
+      allow delete: if false;
+    }
+
+    // Chat rooms: participants can read/write; list queries allowed for any auth user
+    match /chat_rooms/{roomId} {
+      allow list: if request.auth != null;
+      allow get: if request.auth != null &&
+        request.auth.uid in resource.data.participants;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null &&
+        request.auth.uid in resource.data.participants;
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        allow create: if request.auth != null &&
+          request.auth.uid in get(/databases/$(database)/documents/chat_rooms/$(roomId)).data.participants;
+        allow read: if request.auth != null &&
+          request.auth.uid in get(/databases/$(database)/documents/chat_rooms/$(roomId)).data.participants;
+        allow update, delete: if false;
+      }
+    }
+
+    // Notifications: only the recipient
+    match /notifications/{notifId} {
+      allow read, write: if request.auth != null &&
+        request.auth.uid == resource.data.recipientId;
+    }
+
+    // Withdrawal requests: a mechanic owns their own requests.
+    // They may create a pending request and cancel it; approving/paying is
+    // server-side only (Admin SDK bypasses rules).
+    match /withdrawal_requests/{withdrawalId} {
+      allow read: if request.auth != null &&
+        request.auth.uid == resource.data.mechanicId;
+      allow create: if request.auth != null &&
+        request.auth.uid == request.resource.data.mechanicId &&
+        request.resource.data.status == 'pending';
+      allow update: if request.auth != null &&
+        request.auth.uid == resource.data.mechanicId &&
+        resource.data.status == 'pending' &&
+        request.resource.data.status == 'cancelled';
+      allow delete: if false;
+    }
+
+    // Shops: any authenticated user can read, no client writes (admin only)
+    match /shops/{shopId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+  }
+}

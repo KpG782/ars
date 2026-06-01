@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARS Design System Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    html[data-theme="light"] {
+      --background:#F8F9FA;
+      --surface:#FFFFFF;
+      --surface-muted:#F1F5F9;
+      --surface-raised:#E2E8F0;
+      --text1:#0F172A;
+      --text2:#475569;
+      --text3:#64748B;
+      --border:#CBD5E1;
+      --border-strong:#94A3B8;
+      --primary:#F97316;
+      --on-primary:#0F172A;
+      --primary-bg:#FFF7ED;
+      --primary-tx:#9A3412;
+      --emergency:#DC2626;
+      --on-emergency:#FFFFFF;
+      --emergency-bg:#FEE2E2;
+      --emergency-tx:#991B1B;
+      --trust:#3DB3A9;
+      --on-trust:#0F172A;
+      --trust-bg:#E8F6F5;
+      --trust-tx:#2A8A82;
+      --info:#3B82F6;
+      --on-info:#0F172A;
+      --info-bg:#DBEAFE;
+      --info-tx:#1D4ED8;
+      --success:#16A34A;
+      --success-bg:#DCFCE7;
+      --success-tx:#166534;
+      --warning:#F59E0B;
+      --warning-bg:#FEF3C7;
+      --warning-tx:#92400E;
+      --shadow:0 12px 32px rgba(15,23,42,.08);
+    }
+
+    html[data-theme="dark"] {
+      --background:#0F172A;
+      --surface:#111827;
+      --surface-muted:#1E293B;
+      --surface-raised:#334155;
+      --text1:#F8FAFC;
+      --text2:#CBD5E1;
+      --text3:#94A3B8;
+      --border:#475569;
+      --border-strong:#64748B;
+      --primary:#FB923C;
+      --on-primary:#0F172A;
+      --primary-bg:#431407;
+      --primary-tx:#FED7AA;
+      --emergency:#DC2626;
+      --on-emergency:#FFFFFF;
+      --emergency-bg:#450A0A;
+      --emergency-tx:#FCA5A5;
+      --trust:#5EEAD4;
+      --on-trust:#0F172A;
+      --trust-bg:#042F2E;
+      --trust-tx:#99F6E4;
+      --info:#60A5FA;
+      --on-info:#0F172A;
+      --info-bg:#172554;
+      --info-tx:#BFDBFE;
+      --success:#4ADE80;
+      --success-bg:#052E16;
+      --success-tx:#BBF7D0;
+      --warning:#FBBF24;
+      --warning-bg:#451A03;
+      --warning-tx:#FDE68A;
+      --shadow:0 16px 36px rgba(0,0,0,.28);
+    }
+
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      background:var(--background);
+      color:var(--text1);
+      font-family:"Figtree", system-ui, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      transition:background .2s ease, color .2s ease;
+    }
+    button, input { font:inherit; }
+    .wrap { max-width:1180px; margin:0 auto; padding:36px 20px 64px; }
+    header {
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:24px;
+      margin-bottom:24px;
+    }
+    h1 {
+      margin:0;
+      font-size:38px;
+      line-height:1.05;
+      letter-spacing:-.02em;
+      font-weight:900;
+    }
+    h1 span { color:var(--primary); }
+    .eyebrow {
+      margin-top:8px;
+      color:var(--text2);
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+    .sub {
+      max-width:430px;
+      color:var(--text2);
+      font-size:13px;
+      line-height:1.5;
+      text-align:right;
+    }
+    .toggle {
+      margin-top:10px;
+      border:1px solid var(--border-strong);
+      background:var(--surface);
+      color:var(--text1);
+      border-radius:999px;
+      min-height:44px;
+      padding:0 18px;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .bar {
+      width:132px;
+      height:4px;
+      border-radius:4px;
+      background:var(--primary);
+      margin:0 0 26px;
+    }
+    .panel {
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:8px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      margin-bottom:18px;
+    }
+    h2 {
+      margin:0 0 4px;
+      padding-left:10px;
+      border-left:4px solid var(--primary);
+      font-size:20px;
+      line-height:1.2;
+      font-weight:800;
+      letter-spacing:-.01em;
+    }
+    .desc {
+      margin:0 0 18px;
+      padding-left:14px;
+      color:var(--text2);
+      font-size:13px;
+      line-height:1.55;
+    }
+    .grid-2 { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; }
+    .ramp {
+      display:grid;
+      grid-template-columns:repeat(11, minmax(54px, 1fr));
+      gap:8px;
+      overflow:auto;
+      padding-bottom:2px;
+    }
+    .swatch {
+      min-width:54px;
+    }
+    .sw {
+      height:58px;
+      border:1px solid rgba(100,116,139,.22);
+      border-radius:8px;
+    }
+    .label {
+      margin-top:6px;
+      font-size:10px;
+      line-height:1.35;
+      color:var(--text3);
+    }
+    .label b {
+      color:var(--text1);
+      font-weight:800;
+    }
+    .mono {
+      font-family:"JetBrains Mono", ui-monospace, monospace;
+    }
+    .role {
+      margin-top:2px;
+      color:var(--primary);
+      font-weight:800;
+      font-size:9.5px;
+    }
+    .ratio {
+      margin-top:10px;
+      color:var(--text2);
+      font-size:11px;
+      line-height:1.6;
+    }
+    .ok { color:#16A34A; font-weight:800; }
+    .ui { color:#D97706; font-weight:800; }
+    .bad { color:#DC2626; font-weight:800; }
+    .surface-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(148px, 1fr));
+      gap:12px;
+    }
+    .surface-box .box {
+      height:72px;
+      border:1px solid var(--border);
+      border-radius:8px;
+    }
+    .tokens {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+      gap:12px;
+    }
+    .token-row {
+      border:1px solid var(--border);
+      border-radius:8px;
+      overflow:hidden;
+      background:var(--surface-muted);
+    }
+    .token-color { height:62px; }
+    .token-meta { padding:10px; font-size:12px; color:var(--text2); line-height:1.45; }
+    .token-meta b { color:var(--text1); display:block; margin-bottom:2px; }
+    .chips {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .chip {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      border:1px solid transparent;
+    }
+    .dot { width:8px; height:8px; border-radius:50%; }
+    .component-stage {
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:18px;
+      align-items:start;
+    }
+    .sample {
+      border:1px solid var(--border);
+      background:var(--surface-muted);
+      border-radius:8px;
+      padding:16px;
+    }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .btn {
+      min-height:48px;
+      border:1px solid transparent;
+      border-radius:999px;
+      padding:0 18px;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .btn.primary { background:var(--primary); color:var(--on-primary); }
+    .btn.emergency { background:var(--emergency); color:var(--on-emergency); }
+    .btn.trust { background:var(--trust); color:var(--on-trust); }
+    .btn.neutral { background:var(--surface); color:var(--text1); border-color:var(--border-strong); }
+    .field { margin-top:14px; }
+    .field label {
+      display:block;
+      color:var(--text2);
+      font-weight:800;
+      font-size:12px;
+      margin-bottom:8px;
+    }
+    .field input {
+      width:100%;
+      min-height:48px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      background:var(--surface);
+      color:var(--text1);
+      padding:0 14px;
+      outline:none;
+    }
+    .field input:focus {
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px color-mix(in srgb, var(--primary) 24%, transparent);
+    }
+    .mock-map {
+      min-height:250px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--info) 12%, transparent), transparent 45%),
+        repeating-linear-gradient(35deg, var(--surface-muted), var(--surface-muted) 14px, var(--surface) 14px, var(--surface) 28px);
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .route {
+      position:absolute;
+      left:28px;
+      right:38px;
+      top:116px;
+      height:6px;
+      border-radius:6px;
+      background:var(--info);
+      transform:rotate(-7deg);
+    }
+    .pin {
+      position:absolute;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      border:4px solid var(--surface);
+      background:var(--emergency);
+      box-shadow:0 8px 18px rgba(0,0,0,.22);
+    }
+    .pin.a { left:36px; top:121px; }
+    .pin.b { right:46px; top:91px; background:var(--primary); }
+    .map-card {
+      position:relative;
+      z-index:1;
+      max-width:260px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:12px;
+    }
+    .map-card b { display:block; margin-bottom:4px; }
+    .type-row {
+      display:grid;
+      grid-template-columns:230px 1fr;
+      gap:16px;
+      align-items:baseline;
+      border-bottom:1px solid var(--border);
+      padding:10px 0;
+    }
+    .type-row:last-child { border-bottom:0; }
+    .type-meta { color:var(--text3); font-size:11px; line-height:1.45; }
+    .type-meta b { color:var(--text1); font-size:12px; }
+    .scale-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+      gap:10px;
+    }
+    .scale-box {
+      border:1px solid var(--border);
+      border-radius:8px;
+      background:var(--surface-muted);
+      padding:12px;
+      min-height:76px;
+    }
+    .scale-box .value {
+      font-size:22px;
+      font-weight:900;
+      color:var(--primary);
+    }
+    .table {
+      width:100%;
+      border-collapse:collapse;
+      font-size:12px;
+    }
+    .table th,
+    .table td {
+      border-bottom:1px solid var(--border);
+      padding:10px 8px;
+      text-align:left;
+      vertical-align:top;
+    }
+    .table th { color:var(--text2); font-weight:900; }
+    footer {
+      margin-top:28px;
+      color:var(--text3);
+      text-align:center;
+      font-size:11px;
+      line-height:1.6;
+    }
+    @media (max-width: 820px) {
+      header, .grid-2, .component-stage { grid-template-columns:1fr; display:grid; }
+      header { align-items:start; }
+      .sub { text-align:left; }
+      h1 { font-size:31px; }
+      .type-row { grid-template-columns:1fr; gap:4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>ARS <span>Design System</span></h1>
+        <div class="eyebrow">ARS roadside UI tokens</div>
+      </div>
+      <div class="sub">
+        Light and dark mode preview. Asphalt foundation, orange service action, red SOS, teal support, blue route info, green success.
+        <br><button class="toggle" type="button" onclick="toggleTheme()">Toggle light / dark</button>
+      </div>
+    </header>
+    <div class="bar"></div>
+    <main id="app"></main>
+    <footer>
+      Source: docs/design-system token proposal. Ratios are computed live using WCAG relative luminance. Static HTML, no build step.
+    </footer>
+  </div>
+
+  <script>
+    const STEPS = [50,100,200,300,400,500,600,700,800,900,950];
+    const SLATE = {50:'#F8FAFC',100:'#F1F5F9',200:'#E2E8F0',300:'#CBD5E1',400:'#94A3B8',500:'#64748B',600:'#475569',700:'#334155',800:'#1E293B',900:'#0F172A',950:'#020617'};
+    const ORANGE = {50:'#FFF7ED',100:'#FFEDD5',200:'#FED7AA',300:'#FDBA74',400:'#FB923C',500:'#F97316',600:'#EA580C',700:'#C2410C',800:'#9A3412',900:'#7C2D12',950:'#431407'};
+    const RED = {50:'#FEF2F2',100:'#FEE2E2',200:'#FECACA',300:'#FCA5A5',400:'#F87171',500:'#EF4444',600:'#DC2626',700:'#B91C1C',800:'#991B1B',900:'#7F1D1D',950:'#450A0A'};
+    const TEAL = {50:'#F0FDFA',100:'#CCFBF1',200:'#99F6E4',300:'#5EEAD4',400:'#2DD4BF',500:'#14B8A6',600:'#0D9488',700:'#0F766E',800:'#115E59',900:'#134E4A',950:'#042F2E'};
+    const BLUE = {50:'#EFF6FF',100:'#DBEAFE',200:'#BFDBFE',300:'#93C5FD',400:'#60A5FA',500:'#3B82F6',600:'#2563EB',700:'#1D4ED8',800:'#1E40AF',900:'#1E3A8A',950:'#172554'};
+    const GREEN = {50:'#F0FDF4',100:'#DCFCE7',200:'#BBF7D0',300:'#86EFAC',400:'#4ADE80',500:'#22C55E',600:'#16A34A',700:'#15803D',800:'#166534',900:'#14532D',950:'#052E16'};
+    const AMBER = {50:'#FFFBEB',100:'#FEF3C7',200:'#FDE68A',300:'#FCD34D',400:'#FBBF24',500:'#F59E0B',600:'#D97706',700:'#B45309',800:'#92400E',900:'#78350F',950:'#451A03'};
+
+    const LIGHT = {
+      background:'#F8F9FA', surface:'#FFFFFF', surfaceMuted:'#F1F5F9', surfaceRaised:'#E2E8F0',
+      text1:'#0F172A', text2:'#475569', text3:'#64748B', border:'#CBD5E1', borderStrong:'#94A3B8',
+      primary:'#F97316', onPrimary:'#0F172A', emergency:'#DC2626', onEmergency:'#FFFFFF',
+      trust:'#3DB3A9', onTrust:'#0F172A', info:'#3B82F6', onInfo:'#0F172A',
+      success:'#16A34A', warning:'#F59E0B', danger:'#DC2626'
+    };
+    const DARK = {
+      background:'#0F172A', surface:'#111827', surfaceMuted:'#1E293B', surfaceRaised:'#334155',
+      text1:'#F8FAFC', text2:'#CBD5E1', text3:'#94A3B8', border:'#475569', borderStrong:'#64748B',
+      primary:'#FB923C', onPrimary:'#0F172A', emergency:'#DC2626', onEmergency:'#FFFFFF',
+      trust:'#5EEAD4', onTrust:'#0F172A', info:'#60A5FA', onInfo:'#0F172A',
+      success:'#4ADE80', warning:'#FBBF24', danger:'#DC2626'
+    };
+
+    function linear(c) {
+      c = c / 255;
+      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    }
+    function luminance(hex) {
+      hex = hex.replace('#', '');
+      const r = parseInt(hex.slice(0, 2), 16);
+      const g = parseInt(hex.slice(2, 4), 16);
+      const b = parseInt(hex.slice(4, 6), 16);
+      return 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(b);
+    }
+    function contrast(a, b) {
+      const l1 = luminance(a);
+      const l2 = luminance(b);
+      const hi = Math.max(l1, l2);
+      const lo = Math.min(l1, l2);
+      return (hi + 0.05) / (lo + 0.05);
+    }
+    function contrastTag(a, b) {
+      const ratio = contrast(a, b);
+      const text = ratio.toFixed(2) + ':1';
+      if (ratio >= 4.5) return '<span class="ok">' + text + ' AA</span>';
+      if (ratio >= 3) return '<span class="ui">' + text + ' UI</span>';
+      return '<span class="bad">' + text + ' fail</span>';
+    }
+    function theme() {
+      return document.documentElement.getAttribute('data-theme') === 'dark' ? DARK : LIGHT;
+    }
+    function ramp(title, data, roles) {
+      const cells = STEPS.map(step => {
+        const hex = data[step];
+        const role = roles && roles[step] ? '<div class="role">' + roles[step] + '</div>' : '';
+        return '<div class="swatch"><div class="sw" style="background:' + hex + '"></div><div class="label"><b>' + step + '</b><br><span class="mono">' + hex + '</span>' + role + '</div></div>';
+      }).join('');
+      return '<h2>' + title + '</h2><div class="ramp">' + cells + '</div>';
+    }
+    function tokenCard(name, hex, fg, role) {
+      const ratio = fg ? '<div class="ratio">fg contrast ' + contrastTag(fg, hex) + '</div>' : '';
+      return '<div class="token-row"><div class="token-color" style="background:' + hex + '"></div><div class="token-meta"><b>' + name + '</b><span class="mono">' + hex + '</span><br>' + role + ratio + '</div></div>';
+    }
+    function chip(label, bg, fg, dot) {
+      return '<span class="chip" style="background:' + bg + '; color:' + fg + '; border-color:' + bg + '"><span class="dot" style="background:' + dot + '"></span>' + label + ' <span class="mono">' + contrast(fg, bg).toFixed(1) + ':1</span></span>';
+    }
+    function render() {
+      const t = theme();
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const app = document.getElementById('app');
+      const primaryBg = isDark ? '#431407' : '#FFF7ED';
+      const primaryTx = isDark ? '#FED7AA' : '#9A3412';
+      const emergencyBg = isDark ? '#450A0A' : '#FEE2E2';
+      const emergencyTx = isDark ? '#FCA5A5' : '#991B1B';
+      const trustBg = isDark ? '#042F2E' : '#E8F6F5';
+      const trustTx = isDark ? '#99F6E4' : '#2A8A82';
+      const infoBg = isDark ? '#172554' : '#DBEAFE';
+      const infoTx = isDark ? '#BFDBFE' : '#1D4ED8';
+      const successBg = isDark ? '#052E16' : '#DCFCE7';
+      const successTx = isDark ? '#BBF7D0' : '#166534';
+      const warningBg = isDark ? '#451A03' : '#FEF3C7';
+      const warningTx = isDark ? '#FDE68A' : '#92400E';
+
+      app.innerHTML = `
+        <section class="panel">
+          <div class="grid-2">
+            <div>
+              <h2>Mode Ground</h2>
+              <p class="desc">This preview mirrors the planned Flutter tokens. Light mode is service-forward. Dark mode is asphalt-first with brighter accents.</p>
+              <div class="surface-grid">
+                ${['background','surface','surfaceMuted','surfaceRaised','border','borderStrong','text1','text2'].map(k =>
+                  '<div class="surface-box"><div class="box" style="background:' + t[k] + '"></div><div class="label"><b>' + k + '</b><br><span class="mono">' + t[k] + '</span></div></div>'
+                ).join('')}
+              </div>
+              <div class="ratio">Text1 on background ${contrastTag(t.text1, t.background)} · Text2 on surface ${contrastTag(t.text2, t.surface)} · Border on surface ${contrastTag(t.border, t.surface)}</div>
+            </div>
+            <div>
+              <h2>Action Semantics</h2>
+              <p class="desc">Orange is routine service action. Red is SOS and destructive only. Teal is trust/support. Blue is map/info. Green is success only.</p>
+              <div class="tokens">
+                ${tokenCard('primary service', t.primary, t.onPrimary, 'booking, confirm, continue')}
+                ${tokenCard('emergency', t.emergency, t.onEmergency, 'SOS, destructive, critical')}
+                ${tokenCard('trust', t.trust, t.onTrust, 'support, verified context')}
+                ${tokenCard('info', t.info, t.onInfo, 'map, ETA, route info')}
+                ${tokenCard('success', t.success, t.onPrimary, 'completed, available')}
+                ${tokenCard('warning', t.warning, t.onPrimary, 'pending, caution, rating')}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Primitive Ramps</h2>
+          <p class="desc">The named tokens are selected from these families. Custom ARS teal remains visible as a trust accent, but routine action comes from orange.</p>
+          ${ramp('Neutral - Slate / Asphalt', SLATE, {50:'light bg',100:'muted light',300:'border light',400:'strong border light',700:'raised dark',800:'muted dark',900:'dark bg'})}
+          <div class="ratio">Slate text/surface discipline: dark text on light ${contrastTag('#0F172A','#FFFFFF')} · light text on dark ${contrastTag('#F8FAFC','#0F172A')}</div>
+          <br>
+          ${ramp('Primary - Service Orange', ORANGE, {50:'light tint',400:'dark primary',500:'light primary',600:'pressed',800:'tint text'})}
+          <div class="ratio">Dark text on light orange ${contrastTag('#0F172A','#F97316')} · dark text on dark-mode orange ${contrastTag('#0F172A','#FB923C')} · white on orange ${contrastTag('#FFFFFF','#F97316')}</div>
+          <br>
+          ${ramp('Emergency - Red', RED, {100:'light tint',600:'emergency',700:'pressed',800:'tint text'})}
+          <div class="ratio">White on emergency red ${contrastTag('#FFFFFF', '#DC2626')} · black on red ${contrastTag('#000000','#DC2626')}</div>
+          <br>
+          ${ramp('Trust - Teal', TEAL, {100:'light tint',300:'dark trust',500:'ramp reference',950:'dark tint'})}
+          <div class="ratio">ARS custom trust teal #3DB3A9 with asphalt text ${contrastTag('#0F172A','#3DB3A9')} · white on teal ${contrastTag('#FFFFFF','#3DB3A9')}</div>
+          <br>
+          ${ramp('Info - Blue', BLUE, {50:'light tint',400:'dark info',500:'light info',700:'tint text',950:'dark tint'})}
+        </section>
+
+        <section class="panel">
+          <h2>Semantic Chips</h2>
+          <p class="desc">Status chips use tinted background and same-hue text. The fills invert by mode, but the meaning does not change.</p>
+          <div class="chips">
+            ${chip('Service ready', primaryBg, primaryTx, t.primary)}
+            ${chip('SOS active', emergencyBg, emergencyTx, t.emergency)}
+            ${chip('Verified mechanic', successBg, successTx, t.success)}
+            ${chip('ETA updated', infoBg, infoTx, t.info)}
+            ${chip('Payment pending', warningBg, warningTx, t.warning)}
+            ${chip('Support note', trustBg, trustTx, t.trust)}
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Components In Use</h2>
+          <p class="desc">These samples show how the same tokens should feel in real app surfaces: booking, SOS, form, and tracking overlays.</p>
+          <div class="component-stage">
+            <div class="sample">
+              <div class="eyebrow" style="margin-top:0">Routine booking</div>
+              <h3 style="font-size:24px;line-height:1.18;margin:8px 0 6px">Book roadside service</h3>
+              <p style="color:var(--text2);line-height:1.5;margin:0">Pick a repair type, confirm your vehicle, and send the request to nearby verified mechanics.</p>
+              <div class="actions">
+                <button class="btn primary">Book service</button>
+                <button class="btn neutral">Schedule later</button>
+                <button class="btn trust">Ask support</button>
+              </div>
+              <div class="field">
+                <label for="landmark">Landmark</label>
+                <input id="landmark" value="Near Shell Guadalupe">
+              </div>
+            </div>
+            <div class="sample">
+              <div class="eyebrow" style="margin-top:0;color:var(--emergency)">Emergency mode</div>
+              <h3 style="font-size:24px;line-height:1.18;margin:8px 0 6px">Need urgent help?</h3>
+              <p style="color:var(--text2);line-height:1.5;margin:0">Use red only when the action is truly critical. Keep the copy direct and calm.</p>
+              <div class="actions">
+                <button class="btn emergency">Send SOS</button>
+                <button class="btn neutral">Call hotline</button>
+              </div>
+              <div class="ratio">Emergency button contrast ${contrastTag(t.onEmergency, t.emergency)}</div>
+            </div>
+          </div>
+          <br>
+          <div class="mock-map">
+            <div class="route"></div>
+            <div class="pin a"></div>
+            <div class="pin b"></div>
+            <div class="map-card">
+              <b>Mechanic en route</b>
+              <span style="color:var(--text2)">8 min away · 2.4 km</span>
+              <div class="chips" style="margin-top:10px">
+                ${chip('Live ETA', infoBg, infoTx, t.info)}
+                ${chip('Service', primaryBg, primaryTx, t.primary)}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Typography - Figtree</h2>
+          <p class="desc">Operational mobile UI needs clear hierarchy and readable body text. Numeric values should use tabular figures in Flutter where available.</p>
+          ${[
+            ['displayLarge','57 / 400 / 64px','font-size:57px;line-height:64px;font-weight:400;letter-spacing:-.02em','Andar na.'],
+            ['headlineLarge','32 / 600 / 40px','font-size:32px;line-height:40px;font-weight:600','Roadside help is on the way'],
+            ['headlineMedium','28 / 600 / 36px','font-size:28px;line-height:36px;font-weight:600','Choose service type'],
+            ['headlineSmall','24 / 600 / 32px','font-size:24px;line-height:32px;font-weight:600','Verified mechanic nearby'],
+            ['titleLarge','22 / 500 / 28px','font-size:22px;line-height:28px;font-weight:500','Booking details'],
+            ['bodyLarge','16 / 400 / 24px','font-size:16px;line-height:24px;font-weight:400','We will share your location and vehicle details with the assigned mechanic.'],
+            ['bodyMedium','14 / 400 / 20px','font-size:14px;line-height:20px;font-weight:400;color:var(--text2)','Toyota Vios · Battery service · Cash payment'],
+            ['labelLarge','14 / 600 / 18px','font-size:14px;line-height:18px;font-weight:600;text-transform:uppercase;letter-spacing:.04em','Confirm booking'],
+            ['labelMedium numeric','12 / 600 / 16px','font-family:JetBrains Mono, monospace;font-size:12px;line-height:16px;font-weight:600','ETA 08:00 · PHP 1,250']
+          ].map(row => '<div class="type-row"><div class="type-meta"><b>' + row[0] + '</b><br><span class="mono">' + row[1] + '</span></div><div style="' + row[2] + '">' + row[3] + '</div></div>').join('')}
+        </section>
+
+        <section class="panel">
+          <h2>Spacing, Radius, And Material Roles</h2>
+          <p class="desc">The app should use an 8dp spacing rhythm and a small radius set. Material roles stay the same in light and dark; only token values change.</p>
+          <div class="grid-2">
+            <div>
+              <div class="scale-grid">
+                ${[
+                  ['xs','4'],['sm','8'],['md','16'],['lg','24'],['xl','32'],['xxl','40'],
+                  ['radius sm','4'],['radius md','8'],['radius lg','16'],['radius pill','999']
+                ].map(item => '<div class="scale-box"><div class="value">' + item[1] + '</div><b>' + item[0] + '</b></div>').join('')}
+              </div>
+            </div>
+            <div>
+              <table class="table">
+                <thead><tr><th>Material role</th><th>ARS token</th></tr></thead>
+                <tbody>
+                  <tr><td>primary / onPrimary</td><td>orange / asphalt</td></tr>
+                  <tr><td>secondary / onSecondary</td><td>trust teal / asphalt</td></tr>
+                  <tr><td>tertiary / onTertiary</td><td>info blue / asphalt</td></tr>
+                  <tr><td>error / onError</td><td>emergency red / white</td></tr>
+                  <tr><td>surface / onSurface</td><td>surface / text1</td></tr>
+                  <tr><td>outline / outlineVariant</td><td>border / borderStrong</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      render();
+    }
+    render();
+  </script>
+</body>
+</html>

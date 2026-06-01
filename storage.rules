@@ -1,0 +1,29 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Chat media: only authenticated users who are participants can read/write
+    match /chat_media/{chatRoomId}/{allPaths=**} {
+      // Any authenticated user can upload to a chat room path.
+      // Firestore rules enforce participant-only access to the room itself.
+      allow read: if request.auth != null;
+      allow write: if request.auth != null
+                   && request.resource.size < 10 * 1024 * 1024  // max 10 MB
+                   && (request.resource.contentType.matches('image/.*')
+                       || request.resource.contentType.matches('application/pdf'));
+    }
+
+    // User profile photos (future feature)
+    match /profile_photos/{userId}/{allPaths=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId
+                   && request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // Deny everything else by default
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

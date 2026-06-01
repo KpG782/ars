@@ -1,0 +1,135 @@
+name: arsapplication
+description: "A new Flutter project."
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_maps_flutter: ^2.13.1
+  cupertino_icons: ^1.0.8
+  flutter_map: ^8.2.1
+  latlong2: ^0.9.0
+  geolocator: ^14.0.2
+  confetti: ^0.8.0
+
+  # Firebase dependencies (latest from main)
+  firebase_core: ^4.1.0
+  firebase_auth: ^6.0.2
+  cloud_firestore: ^6.0.1
+  firebase_storage: ^13.0.1
+  firebase_messaging: ^16.0.1
+
+  # Local notifications
+  flutter_local_notifications: ^19.0.2
+
+  # Persistent storage
+  shared_preferences: ^2.2.2
+
+  # Media/file handling
+  image_picker: ^1.0.4
+  file_picker: ^8.0.0
+
+  # HTTP client
+  http: ^1.2.0
+  flutter_dotenv: ^5.2.1
+
+  # UI enhancements
+  flutter_lucide: ^1.7.0
+  flutter_svg: ^2.0.10
+  fluttertoast: ^8.2.8
+  flutter_markdown: ^0.7.5
+
+  # Sharing
+  url_launcher: ^6.3.1
+  share_plus: ^10.1.2
+  google_fonts: ^8.0.2
+
+  # State Management - Riverpod
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # Routing
+  go_router: ^14.3.0
+
+  # Logging
+  logger: ^2.4.0
+
+  # Geo queries
+  geoflutterfire_plus: ^0.0.30
+
+  # Firebase Crashlytics
+  firebase_crashlytics: ^5.0.1
+
+  uuid: ^4.5.1
+  path: ^1.9.1
+  intl: ^0.20.2
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  
+  # Riverpod code generation
+  build_runner: ^2.4.11
+  riverpod_generator: ^2.4.0
+  riverpod_lint: ^2.3.10
+  custom_lint: ^0.7.0
+
+  # Launcher icon generation (run: dart run flutter_launcher_icons)
+  flutter_launcher_icons: ^0.14.4
+
+# ARS launcher icon — orange pin+car on brand light surface (#F8F9FA).
+# Sources generated from assets/ars_logo.svg; regenerate with:
+#   dart run flutter_launcher_icons
+flutter_launcher_icons:
+  image_path: "assets/icon/ars_icon_1024.png"
+  android: true
+  min_sdk_android: 21
+  adaptive_icon_background: "#F8F9FA"
+  adaptive_icon_foreground: "assets/icon/ars_foreground_1024.png"
+  ios: true
+  remove_alpha_ios: true
+  background_color_ios: "#F8F9FA"
+  web:
+    generate: true
+    image_path: "assets/icon/ars_icon_1024.png"
+    background_color: "#F8F9FA"
+    theme_color: "#F97316"
+  macos:
+    generate: true
+    image_path: "assets/icon/ars_icon_1024.png"
+  windows:
+    generate: true
+    image_path: "assets/icon/ars_icon_1024.png"
+    icon_size: 256
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
+    - assets/ph-flag.png
+    - assets/onboarding_one.png
+    - assets/onboarding_two.png
+    - assets/onboarding_three.png
+    - assets/arslogo.png
+    - assets/ars_logo.svg
+  fonts:
+    - family: CabinetGrotesk
+      fonts:
+        - asset: assets/fonts/cabinet/CabinetGrotesk-Regular.otf
+        - asset: assets/fonts/cabinet/CabinetGrotesk-Bold.otf
+          weight: 700
+        - asset: assets/fonts/cabinet/CabinetGrotesk-Black.otf
+          weight: 900
+    - family: Chillax
+      fonts:
+        - asset: assets/fonts/chillax/Chillax-Bold.otf
+          weight: 700
+    - family: Satoshi
+      fonts:
+        - asset: assets/fonts/satoshi/Satoshi-Regular.otf
+        - asset: assets/fonts/satoshi/Satoshi-Bold.otf
+          weight: 700

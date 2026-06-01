@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ARS Roadside - Icon Template</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        background: #f0f0f0;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+      }
+      .icon-preview {
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+        margin: 20px;
+        border-radius: 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      .option1 {
+        background: white;
+        border: 3px solid #00bfa5;
+      }
+      .option1 .text {
+        font-size: 72px;
+        font-weight: bold;
+        color: #00bfa5;
+        line-height: 1;
+      }
+      .option1 .subtitle {
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
+      }
+      .option2 {
+        background: linear-gradient(135deg, #00bfa5 0%, #00897b 100%);
+      }
+      .option2 .text {
+        font-size: 80px;
+        font-weight: bold;
+        color: white;
+        line-height: 1;
+      }
+      .option3 {
+        background: #00bfa5;
+        position: relative;
+        overflow: hidden;
+      }
+      .option3 .road {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 40%;
+        background: #333;
+      }
+      .option3 .text {
+        font-size: 70px;
+        font-weight: bold;
+        color: white;
+        z-index: 10;
+        position: relative;
+      }
+      h1 {
+        color: #00bfa5;
+      }
+      .instructions {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      code {
+        background: #e8e8e8;
+        padding: 2px 6px;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🚗 ARS Roadside - App Icon Design</h1>
+
+      <h2>Quick Icon Design Options</h2>
+
+      <div style="text-align: center">
+        <div class="icon-preview option1">
+          <div class="text">ARS</div>
+          <div class="subtitle">⚡ 🔧</div>
+        </div>
+
+        <div class="icon-preview option2">
+          <div class="text">ARS</div>
+        </div>
+
+        <div class="icon-preview option3">
+          <div class="road"></div>
+          <div class="text">ARS</div>
+        </div>
+      </div>
+
+      <div class="instructions">
+        <h3>📋 To Create Your Icon:</h3>
+        <ol>
+          <li>Choose one of the designs above (or create your own)</li>
+          <li>
+            Use any design tool:
+            <ul>
+              <li><strong>Canva</strong> (free, easy) - canva.com</li>
+              <li><strong>Figma</strong> (free, professional) - figma.com</li>
+              <li><strong>Adobe Express</strong> - adobe.com/express</li>
+            </ul>
+          </li>
+          <li>Create a <strong>1024x1024px</strong> image</li>
+          <li>Use the teal color: <code>#00BFA5</code></li>
+          <li>Make "ARS" text large and bold</li>
+          <li>Export as PNG</li>
+          <li>
+            Save as <code>app_icon.png</code> in the
+            <code>assets/icon/</code> folder
+          </li>
+        </ol>
+
+        <h3>🎨 Design Tips:</h3>
+        <ul>
+          <li>Keep it simple - icons are viewed at small sizes</li>
+          <li>Use high contrast (white text on teal, or teal on white)</li>
+          <li>Avoid thin lines - they disappear at small sizes</li>
+          <li>Center the main elements</li>
+          <li>Test at 48x48px to see how it looks on actual devices</li>
+        </ul>
+
+        <h3>⚡ Quick Generate (After adding icon):</h3>
+        <p>Run in terminal:</p>
+        <code style="display: block; padding: 10px; margin: 10px 0">
+          flutter pub get<br />
+          flutter pub run flutter_launcher_icons<br />
+          flutter clean<br />
+          flutter run
+        </code>
+      </div>
+    </div>
+  </body>
+</html>
