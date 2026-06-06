@@ -108,14 +108,14 @@ cd ars
 flutter pub get
 ```
 
-**3. Firebase (bring your own project).** This repo does **not** ship Firebase config — `lib/firebase_options.dart` and `android/app/google-services.json` are gitignored. Generate your own:
+**3. Firebase (optional — bring your own project).** This repo ships **placeholder** Firebase config (`lib/firebase_options.dart` and `android/app/google-services.json` hold clearly-fake values) so the app builds and runs out of the box with the backend disabled. To enable real auth, Firestore, Storage, and push, generate your own and overwrite the placeholders:
 
 ```bash
 dart pub global activate flutterfire_cli
-flutterfire configure          # creates firebase_options.dart + google-services.json
+flutterfire configure          # overwrites firebase_options.dart + google-services.json
 ```
 
-> The app is wrapped so it still launches without a valid Firebase project (UI works), but auth, Firestore, and push require your own project.
+> The app is wrapped so it still launches with the placeholder config (UI works), but auth, Firestore, and push require your own project.
 
 **4. (Optional) AI chatbot key.** Copy `.env.example` to `.env` and set your key; without it, the AI diagnostic chat is simply disabled:
 
@@ -175,7 +175,7 @@ The diagnostic intelligence runs in **ARS Rapide**, a separate FastAPI service t
 
 **Ken Patrick Garcia** — [@KpG782](https://github.com/KpG782)
 
-> ⚠️ Actively-developed portfolio project. Firebase config and secrets are intentionally **not** committed — run `flutterfire configure` and add your own `.env` to enable backend features.
+> ⚠️ Actively-developed portfolio project. Firebase config ships as **fake placeholders** so the app builds out of the box — run `flutterfire configure` to point it at a real project. Real secrets (the `.env` chatbot key, native iOS/macOS plists) are **not** committed; add your own to enable backend features.
 
 ## 📄 License
 

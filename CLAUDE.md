@@ -13,7 +13,7 @@ flutter pub get          # install/resolve dependencies (run after pulling)
 flutter run              # run on the default device; -d <id> to choose (e.g. -d emulator-5554, -d chrome, -d macos)
 flutter devices          # list connected devices/emulators
 flutter analyze          # static analysis / lints (see "Known issues" below)
-flutter test             # run tests (NOTE: the only test is the broken default counter test)
+flutter test             # run tests (design-system + earnings controller suite; currently green)
 flutter build apk --debug    # build a debug Android APK
 ```
 
@@ -32,15 +32,15 @@ Feature-first **clean architecture**. Full map in `docs/ARCHITECTURE.md`.
 
 ## Firebase: placeholder config — backend does NOT work
 
-`lib/firebase_options.dart` contains **fake** credentials (keys read `AlzaSy…` not `AIzaSy…`; dummy appIds; `iosClientId: 'your-ios-client-id'`). `android/app/google-services.json` uses `com.example.arsapplication` with an empty `oauth_client`; there is no `ios/Runner/GoogleService-Info.plist`. `main.dart` catches the init error, so **the app launches and the UI works, but anything backend-dependent (real auth, Firestore, push) will not.** Don't assume the backend works when debugging. To enable it: provide real config files, regenerate `firebase_options.dart` via the FlutterFire CLI, and fix the applicationId.
+`lib/firebase_options.dart` and `android/app/google-services.json` are **committed with clearly-fake placeholder values** (`FAKE-…` keys, `projectId: ars-placeholder`, package `com.example.arsapplication`) so the app **builds and runs out of the box**. `main.dart` wraps `Firebase.initializeApp` in try/catch, so **the UI works, but anything backend-dependent (real auth, Firestore, push) will not.** Don't assume the backend works when debugging. To enable it: run `flutterfire configure` to overwrite the placeholders with real config, and add the native `ios/Runner/GoogleService-Info.plist` (still gitignored). The `.env` chatbot key is gitignored too; a SessionStart hook (`.claude/hooks/session-start.sh`) recreates it from `.env.example` in fresh web sessions.
 
 ## Known issues
 
 See `docs/AUDIT.md` for the full audit. Highlights:
 
-- `flutter analyze` reports ~125 issues; **2 are errors** in `lib/features/mechanic/services/presentation/screens/booking_request.dart` (a wrong relative import). That file is an **orphan** (imported nowhere), so it does **not** block the build. The rest are info/warnings (deprecated `withOpacity`, `avoid_print`, unused elements in a backup file).
-- Cruft (not cleaned — report only): duplicate `docs copy/` folder; `mechanic_splash_screen_backup.dart`; duplicate `mechanic.dart`, `service_request.dart`, and `payment_confirmation_screen.dart`. Verify the import graph before deleting any "duplicate."
-- `test/widget_test.dart` is the default counter test and fails; it's the only test.
+- `flutter analyze` is **clean (0 issues)** and `flutter test` is **green (15 tests)** — design-system token/semantics tests plus the earnings controller. The historical `booking_request.dart` import error, the broken default counter test, the `withOpacity`/`print` lint noise, the `docs copy/` folder, and the `_backup` screen are all already resolved/removed.
+- Remaining cruft (report only — verify the import graph before deleting): likely-dead duplicates `lib/features/customer/data/models/mechanic.dart`, `lib/features/mechanic/dashboard/data/models/service_request.dart`, and the two `payment_confirmation_screen.dart`. The orphan `lib/.../services/presentation/screens/booking_request.dart` (reachable only via the unused `services/services.dart` barrel) hardcodes an OpenRouteService API key — rotate and remove it.
+- `docs/AUDIT.md` predates the current code and is **stale** in places (it describes an earlier, smaller snapshot).
 
 ## Tooling available
 
