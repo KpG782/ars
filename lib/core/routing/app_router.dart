@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,6 +16,7 @@ import '../../features/mechanic/dashboard/presentation/screens/mechanic_dashboar
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/onboarding/presentation/screens/splash_screen.dart';
 import '../../../main.dart' show UserTypeSelectionScreen;
+import '../dev/dev_menu_screen.dart';
 import '../providers/core_providers.dart';
 
 /// Global navigator key used for navigation outside the widget tree
@@ -35,6 +37,7 @@ class AppRoutes {
   static const mechanicProfessional = '/mechanic/onboarding/professional';
   static const mechanicVerification = '/mechanic/verification';
   static const mechanicDashboard = '/mechanic/dashboard';
+  static const dev = '/dev';
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -42,9 +45,15 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     navigatorKey: appNavigatorKey,
-    initialLocation: AppRoutes.splash,
+    // In debug builds, boot straight into the Dev Menu so every screen can be
+    // browsed without a backend. Release builds start at the splash flow.
+    initialLocation: kDebugMode ? AppRoutes.dev : AppRoutes.splash,
     redirect: (context, state) {
-      final isLoggedIn = authState.valueOrNull != null;
+      // Debug builds: skip the auth guard entirely so protected screens
+      // (booking, mechanic dashboard, ...) open without logging in.
+      if (kDebugMode) return null;
+
+      final isLoggedIn = authState.value != null;
       final isPublicRoute =
           state.matchedLocation == AppRoutes.login ||
           state.matchedLocation == AppRoutes.signup ||
@@ -122,6 +131,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.mechanicDashboard,
         builder: (context, state) => const MechanicDashboard(),
+      ),
+      GoRoute(
+        path: AppRoutes.dev,
+        builder: (context, state) => const DevMenuScreen(),
       ),
     ],
     errorBuilder: (context, state) =>

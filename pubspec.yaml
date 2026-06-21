@@ -49,11 +49,11 @@ dependencies:
   google_fonts: ^8.0.2
 
   # State Management - Riverpod
-  flutter_riverpod: ^2.5.1
-  riverpod_annotation: ^2.3.5
+  flutter_riverpod: ^3.0.0
+  riverpod_annotation: ^3.0.0
 
   # Routing
-  go_router: ^14.3.0
+  go_router: ^16.0.0
 
   # Logging
   logger: ^2.4.0
@@ -74,9 +74,9 @@ dev_dependencies:
   
   # Riverpod code generation
   build_runner: ^2.4.11
-  riverpod_generator: ^2.4.0
-  riverpod_lint: ^2.3.10
-  custom_lint: ^0.7.0
+  riverpod_generator: ^3.0.0
+  riverpod_lint: ^3.0.0
+  custom_lint: ^0.8.0
 
   # Launcher icon generation (run: dart run flutter_launcher_icons)
   flutter_launcher_icons: ^0.14.4
