@@ -18,7 +18,9 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Future<void>.delayed(const Duration(milliseconds: 1400));
-      if (mounted) context.go(Routes.roleSelect);
+      // Phase 1: a router redirect reads the session and skips straight to the
+      // role/home for already-signed-in users. For now, always show landing.
+      if (mounted) context.go(Routes.landing);
     });
   }
 
