@@ -2,7 +2,16 @@
 
 > **Verified mechanics, on demand.** A Philippine on-demand mechanic / roadside-repair marketplace — vehicle owners ↔ TESDA-verified mechanics. *Talyer* (from Spanish *taller*) is the everyday Filipino word for an auto repair shop, so the name owns the category the way **Angkas** owns the ride.
 
-This repository is the **clean Talyer foundation**: a complete Flutter **design system** plus a minimal **app shell** (splash → role-select → live design-system gallery). No legacy code — it's the base to rebuild the product on.
+This repository is the **clean Talyer foundation**: a complete Flutter **design system**, an **app shell** (splash → role-select → gallery), a **feature-first clean-architecture spine** (Riverpod + go_router), and **one reference feature slice** wired end-to-end. No legacy code — it's the base to migrate every ARS feature onto, the *right* way.
+
+## Plans (read these)
+
+| Doc | What |
+|---|---|
+| **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** | the spine: layers, dependency inversion, Riverpod, routing, Firebase + Cloud Functions, why the server owns money & matching |
+| **[docs/MIGRATION_PLAN.md](docs/MIGRATION_PLAN.md)** | every ARS feature → Talyer module + action, with audit issues fixed *as you port*; phased roadmap |
+| **[docs/SCALABILITY.md](docs/SCALABILITY.md)** | Firestore data model, dispatch at scale, the live-GPS cost trap, observability |
+| **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** | environments/flavors, CI/CD, the ⛔ store-compliance gate, rollout & rollback |
 
 > ⚠️ **Brand/legal note:** *Talyer* is a generic common word, so for protection register a **distinctive mark** (stylised wordmark, or a compound such as *TalyerGo / Talyer PH*) and run an IPOPHL + App/Play Store name-availability check before launch.
 
@@ -16,11 +25,28 @@ lib/
     components/           button · card · verified badge · status chip · rating ·
                           text field · service tile · mechanic card · empty state · bottom sheet
     design.dart           single-import barrel
+  features/
+    customer/mechanics/   ← REFERENCE SLICE (the pattern every feature follows)
+      domain/             mechanic.dart (entity) · mechanic_repository.dart (interface)
+      data/               fake_mechanic_repository.dart (→ Firestore in Phase 1)
+      presentation/       providers + find_mechanic_screen.dart (skeleton/empty/error/data)
   app/
     app.dart  router.dart screens/ (splash · role_select · gallery)
-  main.dart
+  main.dart               ProviderScope root
+test/                     design_system_test.dart (smoke tests)
+docs/                     ARCHITECTURE · MIGRATION_PLAN · SCALABILITY · DEPLOYMENT
 docs/design-system/       tokens.md · components.md · preview.html · README.md
+.github/workflows/ci.yaml flutter analyze + test on every PR
 ```
+
+### The reference slice
+
+`customer/mechanics` is the architectural proof: tap **Magpa-ayos** → Continue
+and you see a real `AsyncValue` flow — skeleton → data (`MechanicCard` list) →
+empty (`TalyerEmptyState.noMechanic`) → error — fed by a `FakeMechanicRepository`
+behind a domain interface. Phase 1 swaps the fake for Firestore by changing
+**one provider override**; the screen never changes. Copy this shape for every
+migrated feature.
 
 ## Design system at a glance
 
