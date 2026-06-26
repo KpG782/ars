@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Talyer — Design System Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --brand:#3DB3A9; --primary:#1F8079; --primary-press:#18655F;
+    --primary-bg:#E8F6F5; --primary-tx:#0F4B47;
+    --accent:#F97316; --accent-ink:#0F172A;
+    --emergency:#DC2626; --emergency-bg:#FEE2E2; --emergency-tx:#B91C1C;
+    --verified:#B7892B; --verified-bg:#FBF1D9; --verified-tx:#6B4F12;
+    --success:#16A34A; --success-bg:#DCFCE7; --success-tx:#166534;
+    --warning:#F59E0B; --warning-bg:#FEF3C7; --warning-tx:#92400E;
+    --info:#3B82F6; --info-bg:#DBEAFE; --info-tx:#1D4ED8;
+    --rating:#F59E0B;
+    --bg:#F8FAFC; --surface:#FFFFFF; --surface-muted:#F1F5F9;
+    --text1:#0F172A; --text2:#475569; --text3:#64748B;
+    --border:#CBD5E1; --border-strong:#94A3B8;
+    --shadow:0 4px 12px rgba(15,23,42,.06);
+  }
+  html.dark{
+    --brand:#5EEAD4; --primary:#5EEAD4; --primary-press:#9FDDD7;
+    --primary-bg:#0E3B37; --primary-tx:#99F6E4;
+    --accent:#FB923C; --accent-ink:#0F172A;
+    --emergency:#F87171; --emergency-bg:#450A0A; --emergency-tx:#FCA5A5;
+    --verified:#D9B65C; --verified-bg:#3A2E12; --verified-tx:#F3E2B3;
+    --success:#4ADE80; --success-bg:#052E16; --success-tx:#BBF7D0;
+    --warning:#FBBF24; --warning-bg:#451A03; --warning-tx:#FDE68A;
+    --info:#60A5FA; --info-bg:#172554; --info-tx:#BFDBFE;
+    --bg:#0B1220; --surface:#111827; --surface-muted:#1E293B;
+    --text1:#F8FAFC; --text2:#CBD5E1; --text3:#94A3B8;
+    --border:#334155; --border-strong:#475569;
+    --shadow:none;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text1);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 24px 80px}
+  h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em}
+  .display{font-size:32px;line-height:40px;font-weight:700}
+  .headline{font-size:28px;line-height:36px;font-weight:700}
+  .title{font-size:17px;font-weight:600}
+  .caption{font-size:13px;color:var(--text3)}
+  .overline{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3)}
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .brandrow{display:flex;align-items:center;gap:14px}
+  .mark{width:56px;height:56px;border-radius:15px;background:linear-gradient(135deg,var(--brand),var(--primary));display:grid;place-items:center;box-shadow:0 6px 16px rgba(31,128,121,.3);position:relative}
+  .mark svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:2.2}
+  .mark .notch{position:absolute;top:10px;right:10px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+  .toggle{cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;transition:background .2s,border-color .2s}
+  .toggle:hover{border-color:var(--border-strong)}
+  section{margin-top:40px}
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:12px;margin-top:14px}
+  .swatch .chip{height:56px;border-radius:12px;border:1px solid var(--border)}
+  .swatch .name{font-size:12px;font-weight:600;margin-top:6px}
+  .swatch .hex{font-size:11px;color:var(--text3);font-variant-numeric:tabular-nums}
+  .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  .btn{cursor:pointer;border:none;border-radius:28px;min-height:48px;padding:0 24px;font-family:'Inter';font-size:15px;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:filter .2s}
+  .btn:hover{filter:brightness(.96)}
+  .btn-primary{background:var(--primary);color:#fff}
+  .btn-accent{background:var(--accent);color:var(--accent-ink)}
+  .btn-emergency{background:var(--emergency);color:#fff}
+  .btn-outline{background:transparent;color:var(--primary);border:1px solid var(--border)}
+  .badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+  .b-verified{background:var(--verified-bg);color:var(--verified-tx);border:1px solid color-mix(in srgb,var(--verified) 50%,transparent)}
+  .b-primary{background:var(--primary-bg);color:var(--primary-tx)}
+  .b-success{background:var(--success-bg);color:var(--success-tx)}
+  .b-warning{background:var(--warning-bg);color:var(--warning-tx)}
+  .b-emergency{background:var(--emergency-bg);color:var(--emergency-tx)}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow);margin-top:14px}
+  .card.sel{border-color:var(--primary);border-width:2px;background:var(--primary-bg)}
+  .mech{display:flex;gap:12px;align-items:flex-start}
+  .avatar{width:52px;height:52px;border-radius:12px;background:color-mix(in srgb,var(--brand) 16%,transparent);color:var(--primary-tx);display:grid;place-items:center;font-family:'Space Grotesk';font-weight:600;font-size:17px}
+  .grow{flex:1}
+  .nm{display:flex;align-items:center;gap:8px}
+  .rating{display:inline-flex;align-items:center;gap:3px;font-weight:600;margin-top:6px}
+  .star{color:var(--rating)}
+  .chips{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tile{display:flex;gap:16px;align-items:center}
+  .tile .ico{width:52px;height:52px;border-radius:12px;background:color-mix(in srgb,var(--primary) 12%,transparent);color:var(--primary);display:grid;place-items:center}
+  .price{color:var(--primary-tx);font-weight:600;margin-top:8px}
+  .empty{text-align:center;padding:28px 16px}
+  .empty .eico{width:80px;height:80px;border-radius:20px;background:color-mix(in srgb,var(--warning) 14%,transparent);color:var(--warning);display:grid;place-items:center;margin:0 auto 18px}
+  svg.i{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .note{font-size:13px;color:var(--text3);margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brandrow">
+      <div class="mark">
+        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6 1.9 1.9 6-6a4 4 0 0 0 5.4-5.4l-2.2 2.2-1.9-1.9 2.2-2.2z"/></svg>
+        <span class="notch"></span>
+      </div>
+      <div>
+        <div class="display">Talyer</div>
+        <div class="caption">Verified mechanics, on demand.</div>
+      </div>
+    </div>
+    <button class="toggle" id="t" onclick="document.documentElement.classList.toggle('dark')">Toggle dark</button>
+  </header>
+  <p class="note">Static preview of the Flutter design system. The canonical reference is the in-app <code>GalleryScreen</code>.</p>
+
+  <section>
+    <div class="overline">Brand colours</div>
+    <div class="swatches" id="sw"></div>
+  </section>
+
+  <section>
+    <div class="overline">Typography — Space Grotesk + Inter</div>
+    <div class="display" style="margin-top:14px">Display Small</div>
+    <div class="headline">Headline</div>
+    <div class="title" style="margin-top:6px">Title Medium</div>
+    <p style="margin-top:6px">Body large — Verified mechanics, on demand. No surprises.</p>
+    <div class="caption" style="margin-top:4px">Caption / helper text</div>
+  </section>
+
+  <section>
+    <div class="overline">Buttons</div>
+    <div class="row">
+      <button class="btn btn-primary"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#fff"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6 1.9 1.9 6-6a4 4 0 0 0 5.4-5.4l-2.2 2.2-1.9-1.9 2.2-2.2z"/></svg>Tawag ng Talyer</button>
+      <button class="btn btn-accent">Approve quote</button>
+      <button class="btn btn-emergency">SOS</button>
+      <button class="btn btn-outline">Outline</button>
+    </div>
+  </section>
+
+  <section>
+    <div class="overline">Badges &amp; status</div>
+    <div class="row">
+      <span class="badge b-verified"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"><polyline points="20 6 9 17 4 12"/></svg>Verified</span>
+      <span class="badge b-primary">En route</span>
+      <span class="badge b-success">Completed</span>
+      <span class="badge b-warning">Pending</span>
+      <span class="badge b-emergency">Emergency</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="overline">Mechanic card</div>
+    <div class="card">
+      <div class="mech">
+        <div class="avatar">RD</div>
+        <div class="grow">
+          <div class="nm"><strong>Mang Ramon Dela Cruz</strong><span class="badge b-verified"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"><polyline points="20 6 9 17 4 12"/></svg>Verified</span></div>
+          <div class="caption">Engine • Brakes • Electrical</div>
+          <div class="rating"><span class="star">★</span> 4.8 <span class="caption">(213)</span></div>
+        </div>
+        <div style="text-align:right"><div class="caption">from</div><strong>₱350</strong></div>
+      </div>
+      <div class="chips"><span class="badge b-primary">1.4 km</span><span class="badge b-primary">8 min away</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="overline">Service tile</div>
+    <div class="card sel">
+      <div class="tile">
+        <div class="ico"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div class="grow">
+          <strong>Tire Problem</strong>
+          <div class="caption">Flat, busted, or damaged tires? We've got you covered.</div>
+          <div class="price">Est. ₱300–₱800</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="overline">Empty / degraded state</div>
+    <div class="card">
+      <div class="empty">
+        <div class="eico"><svg class="i" viewBox="0 0 24 24" style="width:36px;height:36px"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6 1.9 1.9 6-6a4 4 0 0 0 5.4-5.4l-2.2 2.2-1.9-1.9 2.2-2.2z"/></svg></div>
+        <div class="title">Walang available na Talyer ngayon dito.</div>
+        <p class="caption" style="margin-top:6px">We'll ping you the moment one's free — or try a wider area.</p>
+        <div class="row" style="justify-content:center"><button class="btn btn-primary">Notify me</button><button class="btn btn-outline">Widen search</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const tokens=[['Brand','--brand'],['Primary','--primary'],['Accent','--accent'],['Emergency','--emergency'],['Verified','--verified'],['Success','--success'],['Warning','--warning'],['Info','--info']];
+  const cs=getComputedStyle(document.documentElement);
+  const draw=()=>{const c=getComputedStyle(document.documentElement);
+    document.getElementById('sw').innerHTML=tokens.map(([n,v])=>{
+      const hex=c.getPropertyValue(v).trim();
+      return `<div class="swatch"><div class="chip" style="background:${hex}"></div><div class="name">${n}</div><div class="hex">${hex}</div></div>`;
+    }).join('');};
+  draw();
+  new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+</script>
+</body>
+</html>
