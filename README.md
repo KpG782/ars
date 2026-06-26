@@ -26,6 +26,10 @@ lib/
                           text field · service tile · mechanic card · empty state · bottom sheet
     design.dart           single-import barrel
   features/
+    shared/auth/          ← landing + authentication (first feature)
+      domain/             app_user.dart · auth_repository.dart (incl. deleteAccount, a P0)
+      data/               fake_auth_repository.dart (→ FirebaseAuth in Phase 1)
+      presentation/       auth_controller (Notifier) · landing/login/signup screens
     customer/mechanics/   ← REFERENCE SLICE (the pattern every feature follows)
       domain/             mechanic.dart (entity) · mechanic_repository.dart (interface)
       data/               fake_mechanic_repository.dart (→ Firestore in Phase 1)
@@ -33,7 +37,7 @@ lib/
   app/
     app.dart  router.dart screens/ (splash · role_select · gallery)
   main.dart               ProviderScope root
-test/                     design_system_test.dart (smoke tests)
+test/                     design_system_test.dart · auth_test.dart
 docs/                     ARCHITECTURE · MIGRATION_PLAN · SCALABILITY · DEPLOYMENT
 docs/design-system/       tokens.md · components.md · preview.html · README.md
 .github/workflows/ci.yaml flutter analyze + test on every PR
@@ -47,6 +51,19 @@ empty (`TalyerEmptyState.noMechanic`) → error — fed by a `FakeMechanicReposi
 behind a domain interface. Phase 1 swaps the fake for Firestore by changing
 **one provider override**; the screen never changes. Copy this shape for every
 migrated feature.
+
+### Entry flow (auth — first feature)
+
+`splash → landing (/welcome) → signup | login → role-select → find-mechanic`.
+
+The **landing page** sells the trust promise (verified mechanics · no-surprise
+pricing · anywhere) with two CTAs. **Login/Signup** run through
+`AuthController` (`Notifier<AsyncValue<AppUser?>>`) backed by a
+`FakeAuthRepository` — visible labels, inline validation, a loading button, and
+an announced (`Semantics.liveRegion`) error with a recovery path. The
+`AuthRepository` interface includes **`deleteAccount`** from day one (the P0
+store requirement ARS was missing). Try `wrong@talyer.ph` to see the error
+state. Phase 1 swaps the fake for `FirebaseAuthRepository` — screens unchanged.
 
 ## Design system at a glance
 
