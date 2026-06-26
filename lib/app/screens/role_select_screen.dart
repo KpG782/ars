@@ -55,7 +55,11 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
               TalyerButton(
                 label: 'Continue',
                 icon: Icons.arrow_forward_rounded,
-                onPressed: _role == null ? null : () => context.go(Routes.gallery),
+                onPressed: _role == null
+                    ? null
+                    : () => context.go(
+                        _role == 'customer' ? Routes.findMechanic : Routes.gallery,
+                      ),
               ),
               const SizedBox(height: TalyerSpacing.x4),
               Center(
